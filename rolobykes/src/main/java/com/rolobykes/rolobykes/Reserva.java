@@ -14,6 +14,7 @@ public class Reserva {
     @Id
     private String Codigo;
     private Usuario usuario;
+    @Ma
     private Bicicleta bicicleta;
     private Date fechaReserva;
     private int Duracion;
