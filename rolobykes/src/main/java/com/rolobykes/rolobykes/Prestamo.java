@@ -2,6 +2,8 @@ package com.rolobykes.rolobykes;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,8 +16,11 @@ import lombok.Setter;
 public class Prestamo {
     @Id
     private String Codigo;
+    @ManyToOne
     private Usuario Usuario;
+    @OneToMany
     private Reserva Reserva;
+    @ManyToOne
     private Bicicleta Bicicleta;
 
 }
