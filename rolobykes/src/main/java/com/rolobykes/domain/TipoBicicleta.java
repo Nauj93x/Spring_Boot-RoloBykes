@@ -1,4 +1,4 @@
-package com.rolobykes.rolobykes;
+package com.rolobykes.domain;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package com.rolobykes.rolobykes;
+package com.rolobykes.domain;
 
 import jakarta.persistence.Entity;
 import lombok.AllArgsConstructor;

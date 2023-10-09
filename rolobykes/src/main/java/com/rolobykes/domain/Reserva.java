@@ -1,26 +1,31 @@
-package com.rolobykes.rolobykes;
+package com.rolobykes.domain;
+
+import java.util.Date;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-@Getter 
+@Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class Prestamo {
+public class Reserva {
     @Id
     private String Codigo;
-    @ManyToOne
+    
+    //private Usuario usuario;
+    
+    //private Bicicleta bicicleta;
+    private Date fechaReserva;
+    private int Duracion;
     private Usuario Usuario;
-    @OneToMany
-    private Reserva Reserva;
+    private Prestamo Prestamo;
     @ManyToOne
-    private Bicicleta Bicicleta;
+    private TipoBicicleta TipoBicicleta;
 
 }
