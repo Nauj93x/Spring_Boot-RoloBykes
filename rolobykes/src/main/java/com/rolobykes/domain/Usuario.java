@@ -8,45 +8,30 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-
+@Data
+@Entity
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
 public class Usuario {
 
     @Id
     @GeneratedValue
     Long id;
-
     String correo;
     String password;
     String nombre;
+    String sessionId;
 
     @OneToMany(mappedBy = "usuario")
     List<Reserva> Reservas;
     @OneToMany(mappedBy = "usuario")
-    private List<Prestamo> Prestamos;
-
-//Porque no colocamos private?
-
-    /* 
-    private String Id;
-
-
-    private String Nombre;
-    private String Correo;
-    @OneToMany
-    private List<Reserva> Reservas;
-    @OneToMany
-    private List<Prestamo> Prestamos;
-    private MetodoPago MetodoPago;
-
-    */
+    List<Prestamo> Prestamos;
 }
 
