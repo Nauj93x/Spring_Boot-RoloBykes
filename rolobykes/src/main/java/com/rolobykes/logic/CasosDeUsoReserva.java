@@ -1,29 +1,42 @@
 package com.rolobykes.logic;
 
 import java.sql.Date;
+import java.util.UUID;
+
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.rolobykes.dataaccess.ReservaRepository;
 import com.rolobykes.domain.Bicicleta;
 import com.rolobykes.domain.Reserva;
+import com.rolobykes.domain.TipoBicicleta;
 import com.rolobykes.domain.Usuario;
 
 public class CasosDeUsoReserva {
     @Autowired
     ReservaRepository reservas;
 
-    public void realizarReserva() throws ExcepcionReserva {
+    public void realizarReserva(TipoBicicleta TipoBicicleta, Usuario usuario, Date fechaInicio, int Duracion) throws ExcepcionReserva {
         // Lógica para realizar la reserva
-        // Puedes almacenar la información en la instancia de Reserva o en alguna estructura de datos adecuada
-        // También puedes establecer el estado de la bicicleta como reservada
 
-        // Implementación de la reserva
-        Reserva reserva = new Reserva();  // Supongamos que tienes una clase Reserva
-
+        // Crear una nueva reserva
+        Reserva reserva = new Reserva();
+        String codigo = UUID.randomUUID().toString().substring(0, 8);
         // Configurar la reserva con los parámetros
-        reserva.setBicicleta(bicicleta);
+        reserva.setCodigo(codigo); // Generar un código único para la reserva
+        reserva.setFechaReserva(fechaInicio); // Fecha actual de la reserva
+        reserva.setDuracion(Duracion); // Calcular duración
         reserva.setUsuario(usuario);
-        reserva.setFechaInicio(fechaInicio);
-        reserva.setFechaFin(fechaFin);
+        if (.size() > 0 ) {
+            // 2.1. Sistema muestra un mensaje "Existe otro usuario con ese login"
+            // 2.2. Sistema termina
+            throw new ExcepcionUsuario("Existe otro usuario con ese login");
+        }
+        // Supongamos que tienes un método para obtener el tipo de bicicleta según la bicicleta seleccionada
+        reserva.setTipoBicicleta(tipoBicicleta);
+
+        // Crear un nuevo préstamo asociado a esta reserva
+        Prestamo prestamo = crearPrestamo(reserva);
+        reserva.setPrestamo(prestamo);
 
         // Realizar la reserva (guardar en la base de datos, por ejemplo)
         guardarReservaEnBaseDeDatos(reserva);

@@ -10,6 +10,4 @@ import com.rolobykes.domain.Prestamo;
 @Repository
 public interface PrestamoRepository extends JpaRepository <Prestamo, String>{
 
-
-    
 }
