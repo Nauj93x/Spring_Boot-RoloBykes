@@ -16,16 +16,12 @@ import lombok.Setter;
 @Entity
 public class Reserva {
     @Id
-    private String Codigo;
-    
-    //private Usuario usuario;
-    
-    //private Bicicleta bicicleta;
-    private Date fechaReserva;
-    private int Duracion;
-    private Usuario Usuario;
-    private Prestamo Prestamo;
+    String Codigo;
+    Date fechaReserva;
+    int Duracion;
+    Usuario Usuario;
+    Prestamo Prestamo;
     @ManyToOne
-    private TipoBicicleta TipoBicicleta;
+    TipoBicicleta TipoBicicleta;
 
 }

@@ -18,7 +18,7 @@ public class Prestamo {
     private String Codigo;
     @ManyToOne
     private Usuario Usuario;
-    @OneToMany
+    @OneToMany(mappedBy = "prestamo")
     private Reserva Reserva;
     @ManyToOne
     private Bicicleta Bicicleta;

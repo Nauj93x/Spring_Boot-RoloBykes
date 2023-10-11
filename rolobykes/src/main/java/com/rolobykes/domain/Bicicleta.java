@@ -18,7 +18,7 @@ public class Bicicleta {
     @ManyToOne
     private TipoBicicleta Tipo;
     private String Estado;
-    @OneToMany
+    @OneToMany(mappedBy = "bicicleta")
     private List<Prestamo> Prestamos;
 
 }

@@ -12,6 +12,4 @@ public class MetodoPago {
     private String numeroTarjeta;
     private String fechaExpiracion;
     private String codigoSeguridad;
-
-
 }

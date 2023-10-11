@@ -19,12 +19,10 @@ public class TipoBicicleta {
     @Id
     @GeneratedValue
     Long id;
-
-    @OneToMany
-    private List<Bicicleta> BicicletasMontana;
-    @OneToMany
-    private List<Bicicleta> BicicletasUrbano;
-
-    private String Nombre;
+    @OneToMany(mappedBy = "TipoBicicleta")
+    List<Bicicleta> BicicletasMontana;
+    @OneToMany(mappedBy = "TipoBicicleta")
+    List<Bicicleta> BicicletasUrbano;
+    String Nombre;
 }
 

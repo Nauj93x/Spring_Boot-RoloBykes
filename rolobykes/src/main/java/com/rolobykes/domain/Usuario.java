@@ -28,7 +28,6 @@ public class Usuario {
     String password;
     String nombre;
     String sessionId;
-
     @OneToMany(mappedBy = "usuario")
     List<Reserva> Reservas;
     @OneToMany(mappedBy = "usuario")
