@@ -171,6 +171,6 @@ public class DomainTests {
         
 
         } catch (Exception e) {
-            // TODO: handle exception
+            // Esta excepcion es para mostrarle a samuel que gustavo es marica
         }
     }
