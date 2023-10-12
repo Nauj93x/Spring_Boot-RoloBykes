@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
+import java.sql.Date;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -14,15 +15,17 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.rolobykes.dataaccess.BicicletaRepository;
+import com.rolobykes.dataaccess.ReservaRepository;
 import com.rolobykes.dataaccess.TipoBicicletaRepository;
 import com.rolobykes.dataaccess.UsuarioRepository;
 import com.rolobykes.domain.Bicicleta;
+import com.rolobykes.domain.Reserva;
 import com.rolobykes.domain.TipoBicicleta;
 import com.rolobykes.domain.Usuario;
-
+import com.rolobykes.domain.Prestamo;
 
 @SpringBootTest
-public class ReservaTests {
+public class DomainTests {
     
     @Autowired
     UsuarioRepository usuarios;
@@ -33,12 +36,15 @@ public class ReservaTests {
     @Autowired
     BicicletaRepository bicicletas;
 
+    @Autowired
+    ReservaRepository reservas;
+
     @BeforeEach
     public void borrarBD() {
 
         tiposBicicleta.deleteAll();
         bicicletas.deleteAll();
-        
+        reservas.deleteAll();
         usuarios.deleteAll();
     }
 
@@ -142,5 +148,27 @@ public class ReservaTests {
         }
 
     }
+
+    @Test
+    public void crearReserva(){
+
+        try {
+            // -- Arrange
+            List<Prestamo> prestamos;
+            Date fecha = new Date(1230768000000L);
+            Usuario u = new Usuario(
+                "bill", 
+                "bill@microsoft.com",
+                "ILoveApple");
+            u = usuarios.save(u);
+            Integer dur = 2;
+            TipoBicicleta tipo = new TipoBicicleta("montaña");
+            tipo = tiposBicicleta.save(tipo);
+            Reserva reserva = new Reserva(fecha,dur);
+        } catch (Exception e) {
+            fail("No dejó grabar", e);
+        }
+    }
+
 
 }
