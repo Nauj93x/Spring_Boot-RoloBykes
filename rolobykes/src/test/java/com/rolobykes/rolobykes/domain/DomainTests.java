@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -15,6 +16,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.rolobykes.dataaccess.BicicletaRepository;
+import com.rolobykes.dataaccess.PrestamoRepository;
 import com.rolobykes.dataaccess.ReservaRepository;
 import com.rolobykes.dataaccess.TipoBicicletaRepository;
 import com.rolobykes.dataaccess.UsuarioRepository;
@@ -22,6 +24,7 @@ import com.rolobykes.domain.Bicicleta;
 import com.rolobykes.domain.TipoBicicleta;
 import com.rolobykes.domain.Usuario;
 import com.rolobykes.domain.Prestamo;
+import com.rolobykes.domain.Reserva;
 
 @SpringBootTest
 public class DomainTests {
@@ -34,6 +37,12 @@ public class DomainTests {
 
     @Autowired
     BicicletaRepository bicicletas;
+    
+    @Autowired
+    ReservaRepository reservas;
+
+    @Autowired
+    PrestamoRepository prestamos;
 
     @BeforeEach
     public void borrarBD() {
@@ -144,5 +153,46 @@ public class DomainTests {
         }
 
     }
+
+    @Test
+    public void crearReserva(){
+
+        try {
+            // -- Arrange
+            Date fecha = new Date(1230768000000L);
+            Usuario u = new Usuario(
+                "bill", 
+                "bill@microsoft.com",
+                "ILoveApple");
+            u = usuarios.save(u);
+            Integer dur = 2;
+            TipoBicicleta tipo = new TipoBicicleta("montaña");
+            tipo = tiposBicicleta.save(tipo);
+            Bicicleta bicicleta = new Bicicleta("MyBici");
+            bicicleta.setTipo(tipo);
+            tipo.getBicicletas().add(bicicleta);
+            bicicleta = bicicletas.save(bicicleta);
+            tipo = tiposBicicleta.save(tipo);
+            Prestamo prest = new Prestamo(bicicleta);
+            prest.setActivo(true);
+            prest = prestamos.save(prest);
+            List<Prestamo> presta = new ArrayList<>();
+            presta.add(prest);
+            // -- Act
+            Reserva reserva = new Reserva(fecha,dur);
+            reserva.setUsuario(u);
+            reserva.setPrestamos(presta);
+            reserva = reservas.save(reserva);
+
+            // -- Assert
+            List<Reserva> reservasEnBD = reservas.findByFechaReserva(fecha);
+            assertTrue(reservasEnBD.size()> 0, "No hay reservas en la BD");
+
+
+        } catch (Exception e) {
+            fail("No dejó grabar", e);
+        }
+    }
+
 
 }
