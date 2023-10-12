@@ -6,7 +6,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
 import java.sql.Date;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -21,14 +20,15 @@ import com.rolobykes.dataaccess.ReservaRepository;
 import com.rolobykes.dataaccess.TipoBicicletaRepository;
 import com.rolobykes.dataaccess.UsuarioRepository;
 import com.rolobykes.domain.Bicicleta;
+import com.rolobykes.domain.Prestamo;
+import com.rolobykes.domain.Reserva;
 import com.rolobykes.domain.TipoBicicleta;
 import com.rolobykes.domain.Usuario;
 import com.rolobykes.domain.Prestamo;
-import com.rolobykes.domain.Reserva;
 
 @SpringBootTest
 public class DomainTests {
-    
+
     @Autowired
     UsuarioRepository usuarios;
 
@@ -37,12 +37,6 @@ public class DomainTests {
 
     @Autowired
     BicicletaRepository bicicletas;
-    
-    @Autowired
-    ReservaRepository reservas;
-
-    @Autowired
-    PrestamoRepository prestamos;
 
     @BeforeEach
     public void borrarBD() {
@@ -57,14 +51,14 @@ public class DomainTests {
     public void crearUsuario() {
 
         try {
-            
+
             // -- Arrange
 
             // crea el objeto
             Usuario u = new Usuario(
-                "bill", 
-                "bill@microsoft.com",
-                "ILoveApple");
+                    "bill",
+                    "bill@microsoft.com",
+                    "ILoveApple");
 
             // -- Act
 
@@ -79,7 +73,7 @@ public class DomainTests {
 
             List<Usuario> usuariosEnBD = usuarios.findByCorreo("bill@microsoft.com");
             assertTrue(usuariosEnBD.size() > 0, "No encontro un usuario con ese correo");
-            
+
             Usuario usuarioEnBD = usuariosEnBD.get(0);
             assertNotNull(usuarioEnBD, "el usuario está en NULL");
             assertEquals(u.getNombre(), "bill", "El nombre no coincide");
@@ -102,7 +96,7 @@ public class DomainTests {
 
             // -- Assert
 
-            
+
         } catch (Exception e) {
             // TODO: handle exception
         }
@@ -114,7 +108,7 @@ public class DomainTests {
     public void crearBicicleta() {
 
         try {
-            
+
             // -- Arrange
 
             TipoBicicleta tipo = new TipoBicicleta("montaña");
@@ -137,7 +131,7 @@ public class DomainTests {
             // -- Assert
 
             List<TipoBicicleta> tiposEnBD = tiposBicicleta.findByNombre("montaña");
-            assertTrue(tiposEnBD.size()> 0, "No hay tipos en la BD");
+            assertTrue(tiposEnBD.size() > 0, "No hay tipos en la BD");
 
             TipoBicicleta tipoEnBD = tiposEnBD.get(0);
             assertNotNull(tipoEnBD, "El tipo es NULL");
