@@ -14,15 +14,18 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.rolobykes.dataaccess.BicicletaRepository;
+import com.rolobykes.dataaccess.ReservaRepository;
 import com.rolobykes.dataaccess.TipoBicicletaRepository;
 import com.rolobykes.dataaccess.UsuarioRepository;
 import com.rolobykes.domain.Bicicleta;
+import com.rolobykes.domain.Prestamo;
+import com.rolobykes.domain.Reserva;
 import com.rolobykes.domain.TipoBicicleta;
 import com.rolobykes.domain.Usuario;
 
 
 @SpringBootTest
-public class ReservaTests {
+public class DomainTests {
     
     @Autowired
     UsuarioRepository usuarios;
@@ -33,12 +36,18 @@ public class ReservaTests {
     @Autowired
     BicicletaRepository bicicletas;
 
+    @Autowired
+    ReservaRepository reservas;
+    
+    @Autowired
+    PrestamoRepository prestamos;
+
     @BeforeEach
     public void borrarBD() {
 
         tiposBicicleta.deleteAll();
         bicicletas.deleteAll();
-        
+        reservas.deleteAll();
         usuarios.deleteAll();
     }
 
@@ -143,4 +152,25 @@ public class ReservaTests {
 
     }
 
+    @Test
+    public void crearReserva(){
+
+        try {
+            // -- Arrange
+            Reserva reserva = new Reserva();
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
+    }
+
 }
+
+@Test
+    public void crearPrestamo(){
+       try{
+        
+
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
+    }
