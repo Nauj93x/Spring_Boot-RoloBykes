@@ -9,13 +9,7 @@ import java.util.List;
 @Repository
 public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 
-    // el crea automáticamente
-    //  - save
-    //  - findAll
-    //  - findById
-    
     List<Usuario> findByCorreo(String correo);
     List<Usuario> findByPassword(String password);
     List<Usuario> findBySessionId(String session);
-
 }

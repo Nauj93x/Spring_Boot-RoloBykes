@@ -84,16 +84,16 @@ public class CasosDeUsoUsuario {
         String session
         ) throws ExcepcionUsuario {
         // (1) Verificar que el sessionId sea válido
-        List<Usuario> usuarios = usuarios.findBySessionId(session);
+        List<Usuario> usu = usuarios.findBySessionId(session);
         
         // (2) Cuando el sessionId no es válido
-        if (usuarios.isEmpty()) {
+        if (usu.isEmpty()) {
             throw new ExcepcionUsuario("Identificador de sesión no válido");
         }
         
         try {
             // 3. Sistema cierra la sesión para el usuario
-            for (Usuario usuario : usuarios) {
+            for (Usuario usuario : usu) {
                 usuario.setSessionId(null);  // Elimina el identificador de sesión
             }
         
