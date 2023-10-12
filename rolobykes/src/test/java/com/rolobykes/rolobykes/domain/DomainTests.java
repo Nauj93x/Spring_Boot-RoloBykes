@@ -26,7 +26,7 @@ import com.rolobykes.domain.Usuario;
 
 @SpringBootTest
 public class DomainTests {
-    
+
     @Autowired
     UsuarioRepository usuarios;
 
@@ -38,7 +38,7 @@ public class DomainTests {
 
     @Autowired
     ReservaRepository reservas;
-    
+
     @Autowired
     PrestamoRepository prestamos;
 
@@ -55,14 +55,14 @@ public class DomainTests {
     public void crearUsuario() {
 
         try {
-            
+
             // -- Arrange
 
             // crea el objeto
             Usuario u = new Usuario(
-                "bill", 
-                "bill@microsoft.com",
-                "ILoveApple");
+                    "bill",
+                    "bill@microsoft.com",
+                    "ILoveApple");
 
             // -- Act
 
@@ -77,7 +77,7 @@ public class DomainTests {
 
             List<Usuario> usuariosEnBD = usuarios.findByCorreo("bill@microsoft.com");
             assertTrue(usuariosEnBD.size() > 0, "No encontro un usuario con ese correo");
-            
+
             Usuario usuarioEnBD = usuariosEnBD.get(0);
             assertNotNull(usuarioEnBD, "el usuario está en NULL");
             assertEquals(u.getNombre(), "bill", "El nombre no coincide");
@@ -100,7 +100,7 @@ public class DomainTests {
 
             // -- Assert
 
-            
+
         } catch (Exception e) {
             // TODO: handle exception
         }
@@ -112,7 +112,7 @@ public class DomainTests {
     public void crearBicicleta() {
 
         try {
-            
+
             // -- Arrange
 
             TipoBicicleta tipo = new TipoBicicleta("montaña");
@@ -135,7 +135,7 @@ public class DomainTests {
             // -- Assert
 
             List<TipoBicicleta> tiposEnBD = tiposBicicleta.findByNombre("montaña");
-            assertTrue(tiposEnBD.size()> 0, "No hay tipos en la BD");
+            assertTrue(tiposEnBD.size() > 0, "No hay tipos en la BD");
 
             TipoBicicleta tipoEnBD = tiposEnBD.get(0);
             assertNotNull(tipoEnBD, "El tipo es NULL");
@@ -153,7 +153,7 @@ public class DomainTests {
     }
 
     @Test
-    public void crearReserva(){
+    public void crearReserva() {
 
         try {
             // -- Arrange
@@ -163,14 +163,14 @@ public class DomainTests {
         }
     }
 
-}
 
-@Test
-    public void crearPrestamo(){
-       try{
-        
+    @Test
+    public void crearPrestamo() {
+        try {
+
 
         } catch (Exception e) {
             // Esta excepcion es para mostrarle a samuel que gustavo es marica
         }
     }
+}
