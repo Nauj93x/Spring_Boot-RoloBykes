@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 import com.rolobykes.domain.TipoBicicleta;
 
 @Repository
-public interface TipoBicicletaRepository extends JpaRepository<TipoBicicletaRepository, String>{
+public interface TipoBicicletaRepository extends JpaRepository<TipoBicicleta, String>{
+
     List<TipoBicicleta> findByNombre(String nombre);
 }

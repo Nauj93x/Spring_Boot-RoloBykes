@@ -2,35 +2,41 @@ package com.rolobykes.domain;
 
 import java.util.List;
 
-import jakarta.annotation.Generated;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
-import lombok.AllArgsConstructor;
+
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 
 @Data
 @Entity
-@Getter
-@Setter
 @NoArgsConstructor
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class Usuario {
 
     @Id
     @GeneratedValue
     Long id;
-    String correo;
-    String password;
+
+    @NonNull
     String nombre;
+
+    @NonNull
+    String correo;
+
+    @NonNull
+    String password;
+
     String sessionId = null;
+
     @OneToMany(mappedBy = "usuario")
-    List<Reserva> Reservas;
+    List<Reserva> reservas;
+
     @OneToMany(mappedBy = "usuario")
-    List<Prestamo> Prestamos;
+    List<Prestamo> prestamos;
 }
 

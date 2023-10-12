@@ -26,21 +26,6 @@ public class CasosDeUsoReserva {
         reserva.setFechaReserva(fechaInicio); // Fecha actual de la reserva
         reserva.setDuracion(Duracion); // Calcular duración
         reserva.setUsuario(usuario);
-        if (.size() > 0 ) {
-            // 2.1. Sistema muestra un mensaje "Existe otro usuario con ese login"
-            // 2.2. Sistema termina
-            throw new ExcepcionUsuario("Existe otro usuario con ese login");
-        }
-        // Supongamos que tienes un método para obtener el tipo de bicicleta según la bicicleta seleccionada
-        reserva.setTipoBicicleta(tipoBicicleta);
-
-        // Crear un nuevo préstamo asociado a esta reserva
-        Prestamo prestamo = crearPrestamo(reserva);
-        reserva.setPrestamo(prestamo);
-
-        // Realizar la reserva (guardar en la base de datos, por ejemplo)
-        guardarReservaEnBaseDeDatos(reserva);
-
         // Puedes agregar más acciones relacionadas con la reserva, como registrar la reserva en una base de datos, etc.
     }
 }

@@ -1,27 +1,42 @@
 package com.rolobykes.domain;
 
 import java.util.Date;
+import java.util.List;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
+
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
+import lombok.NonNull;
+
+@Data
 @Entity
+@NoArgsConstructor
 public class Reserva {
+
     @Id
-    String Codigo;
+    @GeneratedValue
+    String codigo;
+
+    @Temporal(TemporalType.DATE)
     Date fechaReserva;
-    int Duracion;
-    Usuario Usuario;
-    Prestamo Prestamo;
+
+    @NonNull
+    Integer duracion;
+    
     @ManyToOne
-    TipoBicicleta TipoBicicleta;
+    Usuario usuario;
+
+    @OneToMany(mappedBy = "reserva")
+    List<Prestamo> prestamos;
+
+    @ManyToOne
+    TipoBicicleta tipoBicicleta;
 
 }

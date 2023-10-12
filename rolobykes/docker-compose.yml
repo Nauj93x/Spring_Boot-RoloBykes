@@ -8,8 +8,8 @@
         image: mysql:8.0.31
         container_name: nose-db
         environment:
-        - MYSQL_DATABASE=tareas
-        - MYSQL_USER=nose
+        - MYSQL_DATABASE=rolobykes
+        - MYSQL_USER=rolobykes
         - MYSQL_PASSWORD=secret
         - MYSQL_ROOT_PASSWORD=secret
         ports:

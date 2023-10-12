@@ -6,19 +6,28 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
+
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
-@Getter@Setter@AllArgsConstructor@NoArgsConstructor
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
+
+@Data
 @Entity
+@NoArgsConstructor
+@RequiredArgsConstructor
 public class Bicicleta {
+
     @Id
-    String Codigo;
+    @NonNull
+    String codigo;
+
     @ManyToOne
-    TipoBicicleta Tipo;
-    boolean Estado;
+    TipoBicicleta tipo;
+
+    boolean disponible;
+
     @OneToMany(mappedBy = "bicicleta")
-    List<Prestamo> Prestamos;
+    List<Prestamo> prestamos;
 
 }
