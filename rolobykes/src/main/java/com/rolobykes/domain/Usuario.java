@@ -27,7 +27,7 @@ public class Usuario {
     String correo;
     String password;
     String nombre;
-    String sessionId;
+    String sessionId = null;
     @OneToMany(mappedBy = "usuario")
     List<Reserva> Reservas;
     @OneToMany(mappedBy = "usuario")

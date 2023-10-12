@@ -14,11 +14,11 @@ import lombok.Setter;
 @Entity
 public class Bicicleta {
     @Id
-    private String Codigo;
+    String Codigo;
     @ManyToOne
-    private TipoBicicleta Tipo;
-    private String Estado;
+    TipoBicicleta Tipo;
+    boolean Estado;
     @OneToMany(mappedBy = "bicicleta")
-    private List<Prestamo> Prestamos;
+    List<Prestamo> Prestamos;
 
 }

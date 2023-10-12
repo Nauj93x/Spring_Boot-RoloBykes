@@ -15,12 +15,13 @@ import lombok.Setter;
 @Entity
 public class Prestamo {
     @Id
-    private String Codigo;
+    String Codigo;
     @ManyToOne
-    private Usuario Usuario;
+    Usuario Usuario;
     @OneToMany(mappedBy = "prestamo")
-    private Reserva Reserva;
+    Reserva Reserva;
     @ManyToOne
-    private Bicicleta Bicicleta;
+    Bicicleta Bicicleta;
+    boolean Activo;
 
 }
