@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -38,9 +39,15 @@ public class DomainTests {
     @Autowired
     BicicletaRepository bicicletas;
 
+    @Autowired
+    ReservaRepository reservas;
+
+    @Autowired 
+    PrestamoRepository prestamos;
+
     @BeforeEach
     public void borrarBD() {
-
+        prestamos.deleteAll();
         tiposBicicleta.deleteAll();
         bicicletas.deleteAll();
         reservas.deleteAll();
