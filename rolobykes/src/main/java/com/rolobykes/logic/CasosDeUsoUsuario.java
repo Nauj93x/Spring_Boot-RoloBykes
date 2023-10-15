@@ -74,6 +74,9 @@ public class CasosDeUsoUsuario {
             // 4.2. Sistema termina.
             throw new ExcepcionUsuario("La contraseña no coincide");
         }
+        if(usuarioEncontrado.getSessionId()!= null){
+            throw new ExcepcionUsuario("Esta sesion ya ha sido iniciada");
+        }
     
         // (6) Sistema inicia la sesión para el usuario
         String sessionId = generarIdentificadorSesion();

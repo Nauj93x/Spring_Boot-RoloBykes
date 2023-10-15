@@ -49,7 +49,10 @@ public class CasosdeUsoUsuarioTests {
         u.setCorreo("jaime");
         u.setNombre("jaime");
         u.setPassword("jaime");
+        casosDeUsoUsuario.iniciarSesion("jaime","jaime");
         usuarios.save(u);
+
+        u
 
     }
 
@@ -157,6 +160,25 @@ public class CasosdeUsoUsuarioTests {
             }
         } catch (Exception e) {
             fail("Se generó error y no debería", e);
+        }
+    }
+
+    @Test
+    @Transactional
+    public void iniciarSesionConSesionYaExistente(){
+
+        try {
+
+            // Arrange
+
+            // Act
+            casosDeUsoUsuario.iniciarSesion("jaime", "jaime");
+
+            // Assert
+            fail("Dejó iniciar sesion a usuario con sesion que ya existia");
+
+        } catch (ExcepcionUsuario e) {
+            // ok !!
         }
     }
 
