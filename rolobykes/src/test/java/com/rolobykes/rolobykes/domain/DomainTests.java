@@ -25,7 +25,6 @@ import com.rolobykes.domain.Prestamo;
 import com.rolobykes.domain.Reserva;
 import com.rolobykes.domain.TipoBicicleta;
 import com.rolobykes.domain.Usuario;
-import com.rolobykes.domain.Prestamo;
 
 @SpringBootTest
 public class DomainTests {

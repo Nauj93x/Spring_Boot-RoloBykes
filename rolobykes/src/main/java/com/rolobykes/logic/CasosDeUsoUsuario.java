@@ -4,10 +4,12 @@ import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.rolobykes.dataaccess.UsuarioRepository;
 import com.rolobykes.domain.Usuario;
 
+@Service
 public class CasosDeUsoUsuario {
     
     @Autowired
@@ -52,6 +54,7 @@ public class CasosDeUsoUsuario {
     String login, 
     String password
     ) throws ExcepcionUsuario {
+
         // (1) Sistema busca usuarios por el login
         List<Usuario> usuariosEncontrados = usuarios.findByCorreo(login);
     
@@ -63,21 +66,20 @@ public class CasosDeUsoUsuario {
         }
     
         // (3) Validar que el password coincida con al menos uno de los usuarios encontrados
-        boolean passwordCoincide = usuariosEncontrados.stream().anyMatch(usuario -> usuario.getPassword().equals(password));
-    
+        Usuario usuarioEncontrado = usuariosEncontrados.get(0);
+
         // (4) Cuando el password no coincide con ningún usuario
-        if (!passwordCoincide) {
+        if (! usuarioEncontrado.getPassword().equals(password)) {
             // 4.1. Sistema muestra un mensaje "La contraseña no coincide"
             // 4.2. Sistema termina.
             throw new ExcepcionUsuario("La contraseña no coincide");
         }
     
         // (6) Sistema inicia la sesión para el usuario
-        for (Usuario usuario : usuariosEncontrados) {
-            String sessionId = generarIdentificadorSesion();
-            usuario.setSessionId(sessionId);
-            // Puedes agregar más acciones relacionadas con el inicio de sesión, como registrar la hora de inicio de sesión, etc.
-        }
+        String sessionId = generarIdentificadorSesion();
+        usuarioEncontrado.setSessionId(sessionId);
+
+        usuarios.save(usuarioEncontrado);
     }
 
     public void cerrarSesion(

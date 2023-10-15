@@ -11,6 +11,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.rolobykes.dataaccess.UsuarioRepository;
 import com.rolobykes.domain.Usuario;
@@ -126,6 +127,37 @@ public class CasosdeUsoUsuarioTests {
             // ok !!
         }
 
+    }
+
+    @Test
+    @Transactional
+    public void iniciarSesionSinErrores(){
+
+        try {
+
+            // Arrange
+            casosDeUsoUsuario.registrarUsuario(
+                    "juan", 
+                    "SoyElMejor", 
+                    "Juan El mejor");
+
+            // Act
+            casosDeUsoUsuario.iniciarSesion(
+                "juan",
+                "SoyElMejor");
+            
+            List<Usuario> usuariosIniciados = usuarios.findByCorreo("juan");
+            if (usuariosIniciados.size() == 0) {
+                // mal !!
+                fail("No se grabó el usuario");
+            }
+            Usuario usuario = usuariosIniciados.get(0);
+            if(usuario.getSessionId()== null){
+                fail("No se inicio sesion");
+            }
+        } catch (Exception e) {
+            fail("Se generó error y no debería", e);
+        }
     }
 
 

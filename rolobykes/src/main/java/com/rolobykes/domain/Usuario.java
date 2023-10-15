@@ -1,5 +1,6 @@
 package com.rolobykes.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.Entity;
@@ -34,9 +35,9 @@ public class Usuario {
     String sessionId = null;
 
     @OneToMany(mappedBy = "usuario")
-    List<Reserva> reservas;
+    List<Reserva> reservas = new ArrayList<>();
 
     @OneToMany(mappedBy = "usuario")
-    List<Prestamo> prestamos;
+    List<Prestamo> prestamos = new ArrayList<>();
 }
 

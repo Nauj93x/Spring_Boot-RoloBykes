@@ -4,13 +4,14 @@ import java.sql.Date;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.rolobykes.dataaccess.ReservaRepository;
-import com.rolobykes.domain.Bicicleta;
 import com.rolobykes.domain.Reserva;
 import com.rolobykes.domain.TipoBicicleta;
 import com.rolobykes.domain.Usuario;
 
+@Service
 public class CasosDeUsoReserva {
     @Autowired
     ReservaRepository reservas;

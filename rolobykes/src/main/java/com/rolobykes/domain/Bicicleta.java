@@ -28,6 +28,6 @@ public class Bicicleta {
     boolean disponible;
 
     @OneToMany(mappedBy = "bicicleta")
-    List<Prestamo> prestamos;
+    List<Prestamo> prestamos = new ArrayList<>();
 
 }
