@@ -49,10 +49,8 @@ public class CasosdeUsoUsuarioTests {
         u.setCorreo("jaime");
         u.setNombre("jaime");
         u.setPassword("jaime");
-        casosDeUsoUsuario.iniciarSesion("jaime","jaime");
+        u.setSessionId("hola");
         usuarios.save(u);
-
-        u
 
     }
 
@@ -182,6 +180,64 @@ public class CasosdeUsoUsuarioTests {
         }
     }
 
+    @Test
+    @Transactional
+    public void cerrarSesionSinErrores(){
+
+        try {
+
+            // Arrange
+            casosDeUsoUsuario.registrarUsuario(
+                    "juan", 
+                    "SoyElMejor", 
+                    "Juan El mejor");
+
+            // Act
+            casosDeUsoUsuario.iniciarSesion(
+                "juan",
+                "SoyElMejor");
+
+            casosDeUsoUsuario.cerrarSesion(
+                "juan"
+            );
+            
+            List<Usuario> usuariosIniciados = usuarios.findByCorreo("juan");
+            if (usuariosIniciados.size() == 0) {
+                // mal !!
+                fail("No se grabó el usuario");
+            }
+            Usuario usuario = usuariosIniciados.get(0);
+            if(usuario.getSessionId()!= null){
+                fail("No se cerro sesion");
+            }
+        } catch (Exception e) {
+            fail("Se generó error y no debería", e);
+        }
+    }
+
+    @Test
+    @Transactional
+    public void cerrarSesionConUsuarioSinSesion(){
+
+        try {
+
+            // Arrange
+            casosDeUsoUsuario.registrarUsuario(
+                    "juan", 
+                    "SoyElMejor", 
+                    "Juan El mejor");
+
+            // Act
+
+            casosDeUsoUsuario.cerrarSesion(
+                "juan"
+            );
+            
+            fail("Dejó cerrar sesión a usuario que no ha iniciado sesión");
+        } catch (Exception e) {
+            // ok !!
+        }
+    }
 
     // Clean Up
     // --------

@@ -86,26 +86,26 @@ public class CasosDeUsoUsuario {
     }
 
     public void cerrarSesion(
-        String session
-        ) throws ExcepcionUsuario {
+        String correo) throws ExcepcionUsuario {
         // (1) Verificar que el sessionId sea válido
-        List<Usuario> usu = usuarios.findBySessionId(session);
-        
+        List<Usuario> usuariosEncontrados = usuarios.findByCorreo(correo);
+    
         // (2) Cuando el sessionId no es válido
-        if (usu.isEmpty()) {
-            throw new ExcepcionUsuario("Identificador de sesión no válido");
+        if (usuariosEncontrados.isEmpty()) {
+            // 2.1. Sistema muestra un mensaje "No se encontró ningún usuario con ese login"
+            // 2.2. Sistema termina
+            throw new ExcepcionUsuario("No se encontró ningún usuario con ese login");
         }
-        
-        try {
-            // 3. Sistema cierra la sesión para el usuario
-            for (Usuario usuario : usu) {
-                usuario.setSessionId(null);  // Elimina el identificador de sesión
-            }
-        
-        } catch (Exception e) {
-            // Manejo de excepciones
-            throw new ExcepcionUsuario("Error al cerrar la sesión");
+    
+        Usuario usuarioEncontrado = usuariosEncontrados.get(0);
+    
+        if (usuarioEncontrado.getSessionId() == null) {
+            throw new ExcepcionUsuario("La sesión no ha sido iniciada para este usuario");
         }
+    
+        // (6) Sistema inicia la sesión para el usuario
+        usuarioEncontrado.setSessionId(null);
+        usuarios.save(usuarioEncontrado);
     }
 
 
