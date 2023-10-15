@@ -135,7 +135,7 @@ public class DomainTests {
             // -- Assert
 
             List<TipoBicicleta> tiposEnBD = tiposBicicleta.findByNombre("montaña");
-            assertTrue(tiposEnBD.size() > 0, "No hay tipos en la BD");
+            assertTrue(tiposEnBD.size()> 0, "No hay tipos en la BD");
 
             TipoBicicleta tipoEnBD = tiposEnBD.get(0);
             assertNotNull(tipoEnBD, "El tipo es NULL");
