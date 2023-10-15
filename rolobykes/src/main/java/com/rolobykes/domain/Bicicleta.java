@@ -31,4 +31,5 @@ public class Bicicleta {
     @OneToMany(mappedBy = "bicicleta")
     List<Prestamo> prestamos = new ArrayList<>();
 
+    
 }
