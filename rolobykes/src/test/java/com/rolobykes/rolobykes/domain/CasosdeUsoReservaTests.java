@@ -135,18 +135,74 @@ public class CasosdeUsoReservaTests {
             Date fecha = new Date(1230768000000L);
 
             casosDeUsoReserva.realizarReserva(tipo, u, fecha, 2);
-            List<Reserva> reservasIniciadas = reservas.findByFechaReserva(fecha);
-            if (reservasIniciadas.size() == 0) {
-                // mal !!
-                fail("No se grabó la reserva");
-            }
+            fail("Dejó hacer reserva a usuario que no ha iniciado sesión");
             
         } catch (Exception e) {
-            fail("No dejo guardar la reserva",e);
+            //ok
         }
 
     }
 
+    @Test
+    @Transactional
+    public void realizarReservaConTipoNoExistente() {
+        try {
+            casosDeUsoUsuario.registrarUsuario(
+                "juan", 
+                "SoyElMejor", 
+                "Juan El mejor");
+            List<Usuario> usuariosExistentes = usuarios.findByCorreo("juan");
+            Usuario u = usuariosExistentes.get(0);
+
+            TipoBicicleta tipo = new TipoBicicleta("montaña");
+
+            Bicicleta bicicleta = new Bicicleta("MyBici");
+
+            bicicleta.setTipo(tipo);
+            tipo.getBicicletas().add(bicicleta);
+
+            bicicleta = bicicletas.save(bicicleta);
+            tipo = tiposBicicleta.save(tipo);
+
+            Date fecha = new Date(1230768000000L);
+
+            casosDeUsoReserva.realizarReserva(tipo, u, fecha, 2);
+            fail("Dejó hacer reserva a usuario que ingreso tipo de bicicleta no existente ");
+            
+        } catch (Exception e) {
+            //ok
+        }
+
+    }
+
+    @Test
+    @Transactional
+    public void realizarReservaConUsuarioNoRegistrado() {
+        try {
+
+            List<Usuario> usuariosExistentes = usuarios.findByCorreo("juan");
+            Usuario u = usuariosExistentes.get(0);
+
+            TipoBicicleta tipo = new TipoBicicleta("montaña");
+
+            Bicicleta bicicleta = new Bicicleta("MyBici");
+
+            bicicleta.setTipo(tipo);
+            tipo.getBicicletas().add(bicicleta);
+
+            bicicleta = bicicletas.save(bicicleta);
+            tipo = tiposBicicleta.save(tipo);
+
+            Date fecha = new Date(1230768000000L);
+
+            casosDeUsoReserva.realizarReserva(tipo, u, fecha, 2);
+            fail("Dejó hacer reserva a usuario no registrado");
+            
+        } catch (Exception e) {
+            //ok
+        }
+
+    }
 
 
     @AfterEach
