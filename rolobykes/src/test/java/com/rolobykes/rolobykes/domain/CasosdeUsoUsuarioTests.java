@@ -44,7 +44,7 @@ public class CasosdeUsoUsuarioTests {
         System.out.println();
 
         usuarios.deleteAll();
-
+        
         Usuario u = new Usuario();
         u.setCorreo("jaime");
         u.setNombre("jaime");

@@ -46,10 +46,14 @@ public class DomainTests {
 
     @BeforeEach
     public void borrarBD() {
-        prestamos.deleteAll();
-        tiposBicicleta.deleteAll();
-        bicicletas.deleteAll();
         reservas.deleteAll();
+
+        prestamos.deleteAll();
+
+        bicicletas.deleteAll();
+        
+        tiposBicicleta.deleteAll();
+
         usuarios.deleteAll();
     }
 
@@ -168,6 +172,7 @@ public class DomainTests {
             Integer dur = 2;
             TipoBicicleta tipo = new TipoBicicleta("montaña");
             tipo = tiposBicicleta.save(tipo);
+            
             Bicicleta bicicleta = new Bicicleta("MyBici");
             bicicleta.setTipo(tipo);
             tipo.getBicicletas().add(bicicleta);
@@ -193,6 +198,5 @@ public class DomainTests {
             fail("No dejó grabar", e);
         }
     }
-
 
 }

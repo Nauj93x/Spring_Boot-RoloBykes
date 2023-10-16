@@ -19,7 +19,7 @@ public class Prestamo {
 
     @Id
     @GeneratedValue
-    String codigo;
+    Long codigo;
 
     @ManyToOne
     Usuario usuario;
