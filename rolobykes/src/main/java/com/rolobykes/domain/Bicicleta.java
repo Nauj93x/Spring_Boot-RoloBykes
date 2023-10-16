@@ -1,5 +1,6 @@
 package com.rolobykes.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.Entity;
@@ -28,6 +29,7 @@ public class Bicicleta {
     boolean disponible;
 
     @OneToMany(mappedBy = "bicicleta")
-    List<Prestamo> prestamos;
+    List<Prestamo> prestamos = new ArrayList<>();
 
+    
 }

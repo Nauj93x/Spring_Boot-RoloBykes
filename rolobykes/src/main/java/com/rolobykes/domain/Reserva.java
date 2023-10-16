@@ -1,5 +1,6 @@
 package com.rolobykes.domain;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -37,7 +38,7 @@ public class Reserva {
     Usuario usuario;
 
     @OneToMany(mappedBy = "reserva")
-    List<Prestamo> prestamos;
+    List<Prestamo> prestamos = new ArrayList<>();
 
     @ManyToOne
     TipoBicicleta tipoBicicleta;

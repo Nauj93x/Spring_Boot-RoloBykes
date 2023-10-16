@@ -6,9 +6,15 @@ import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 
 @Data
 @Entity
+@NoArgsConstructor
+@RequiredArgsConstructor
+
 public class Prestamo {
 
     @Id
@@ -21,9 +27,10 @@ public class Prestamo {
     @ManyToOne
     Reserva reserva;
 
+    @NonNull
     @ManyToOne
     Bicicleta bicicleta;
-    
+
     boolean activo;
 
 }

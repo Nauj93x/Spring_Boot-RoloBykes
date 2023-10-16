@@ -4,10 +4,12 @@ import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.rolobykes.dataaccess.UsuarioRepository;
 import com.rolobykes.domain.Usuario;
 
+@Service
 public class CasosDeUsoUsuario {
     
     @Autowired
@@ -52,6 +54,7 @@ public class CasosDeUsoUsuario {
     String login, 
     String password
     ) throws ExcepcionUsuario {
+
         // (1) Sistema busca usuarios por el login
         List<Usuario> usuariosEncontrados = usuarios.findByCorreo(login);
     
@@ -63,44 +66,46 @@ public class CasosDeUsoUsuario {
         }
     
         // (3) Validar que el password coincida con al menos uno de los usuarios encontrados
-        boolean passwordCoincide = usuariosEncontrados.stream().anyMatch(usuario -> usuario.getPassword().equals(password));
-    
+        Usuario usuarioEncontrado = usuariosEncontrados.get(0);
+
         // (4) Cuando el password no coincide con ningún usuario
-        if (!passwordCoincide) {
+        if (! usuarioEncontrado.getPassword().equals(password)) {
             // 4.1. Sistema muestra un mensaje "La contraseña no coincide"
             // 4.2. Sistema termina.
             throw new ExcepcionUsuario("La contraseña no coincide");
         }
+        if(usuarioEncontrado.getSessionId()!= null){
+            throw new ExcepcionUsuario("Esta sesion ya ha sido iniciada");
+        }
     
         // (6) Sistema inicia la sesión para el usuario
-        for (Usuario usuario : usuariosEncontrados) {
-            String sessionId = generarIdentificadorSesion();
-            usuario.setSessionId(sessionId);
-            // Puedes agregar más acciones relacionadas con el inicio de sesión, como registrar la hora de inicio de sesión, etc.
-        }
+        String sessionId = generarIdentificadorSesion();
+        usuarioEncontrado.setSessionId(sessionId);
+
+        usuarios.save(usuarioEncontrado);
     }
 
     public void cerrarSesion(
-        String session
-        ) throws ExcepcionUsuario {
+        String correo) throws ExcepcionUsuario {
         // (1) Verificar que el sessionId sea válido
-        List<Usuario> usu = usuarios.findBySessionId(session);
-        
+        List<Usuario> usuariosEncontrados = usuarios.findByCorreo(correo);
+    
         // (2) Cuando el sessionId no es válido
-        if (usu.isEmpty()) {
-            throw new ExcepcionUsuario("Identificador de sesión no válido");
+        if (usuariosEncontrados.isEmpty()) {
+            // 2.1. Sistema muestra un mensaje "No se encontró ningún usuario con ese login"
+            // 2.2. Sistema termina
+            throw new ExcepcionUsuario("No se encontró ningún usuario con ese login");
         }
-        
-        try {
-            // 3. Sistema cierra la sesión para el usuario
-            for (Usuario usuario : usu) {
-                usuario.setSessionId(null);  // Elimina el identificador de sesión
-            }
-        
-        } catch (Exception e) {
-            // Manejo de excepciones
-            throw new ExcepcionUsuario("Error al cerrar la sesión");
+    
+        Usuario usuarioEncontrado = usuariosEncontrados.get(0);
+    
+        if (usuarioEncontrado.getSessionId() == null) {
+            throw new ExcepcionUsuario("La sesión no ha sido iniciada para este usuario");
         }
+    
+        // (6) Sistema inicia la sesión para el usuario
+        usuarioEncontrado.setSessionId(null);
+        usuarios.save(usuarioEncontrado);
     }
 
 
