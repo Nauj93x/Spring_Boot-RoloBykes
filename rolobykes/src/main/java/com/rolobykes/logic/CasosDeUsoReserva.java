@@ -21,9 +21,7 @@ public class CasosDeUsoReserva {
 
         // Crear una nueva reserva
         Reserva reserva = new Reserva();
-        String codigo = UUID.randomUUID().toString().substring(0, 8);
         // Configurar la reserva con los parámetros
-        reserva.setCodigo(codigo); // Generar un código único para la reserva
         reserva.setFechaReserva(fechaInicio); // Fecha actual de la reserva
         reserva.setDuracion(Duracion); // Calcular duración
         reserva.setUsuario(usuario);

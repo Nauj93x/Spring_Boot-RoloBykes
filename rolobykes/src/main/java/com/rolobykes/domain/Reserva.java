@@ -25,7 +25,7 @@ public class Reserva {
 
     @Id
     @GeneratedValue
-    String codigo;
+    Long codigo;
 
     @NonNull
     @Temporal(TemporalType.DATE)
