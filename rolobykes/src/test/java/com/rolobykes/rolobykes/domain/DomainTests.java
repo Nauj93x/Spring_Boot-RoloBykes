@@ -203,9 +203,37 @@ public class DomainTests {
     @Transactional
     public void crearPrestamo(){
         try {
+            // -- Arrange
+            Date fecha = new Date(1230768000000L);
+            Integer dur = 2;
+            Usuario u = new Usuario(
+                "bill", 
+                "bill@microsoft.com",
+                "ILoveApple");
+            u = usuarios.save(u);
+            TipoBicicleta tipo = new TipoBicicleta("montaña");
+            tipo = tiposBicicleta.save(tipo);
+            Bicicleta bicicleta = new Bicicleta("MyBici");
+            bicicleta.setTipo(tipo);
+            tipo.getBicicletas().add(bicicleta);
+            bicicleta = bicicletas.save(bicicleta);
+            tipo = tiposBicicleta.save(tipo);
+            Reserva reserva = new Reserva(fecha,dur);
+            reserva = reservas.save(reserva);
+            // -- Act
+            Prestamo prest = new Prestamo();
+            prest.setBicicleta(bicicleta);
+            prest.setUsuario(u);
+            prest.setActivo(true);
+            prest.setReserva(reserva);
+            prest = prestamos.save(prest);
             
+            // -- Assert
+            List<Prestamo> prestamosEnBD = prestamos.findByBicicleta(bicicleta);
+            assertTrue(prestamosEnBD.size()> 0, "No hay prestamos en la BD");
+
         } catch (Exception e) {
-            // TODO: handle exception
+            fail("No dejó grabar", e);
         }
     }
 
