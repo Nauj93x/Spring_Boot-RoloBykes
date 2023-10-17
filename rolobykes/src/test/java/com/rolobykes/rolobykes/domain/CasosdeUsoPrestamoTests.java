@@ -261,11 +261,79 @@ public class CasosdeUsoPrestamoTests {
 
     @Test
     @Transactional
-    public void finalizarPrestamoConCodigoInexistente(){
+    public void finalizarPrestamoConCodigodeBicicletaInexistente(){
         try {
+            List<Usuario> usuariosExistentes = usuarios.findByCorreo("jaime");
+            Usuario u = usuariosExistentes.get(0);
+
+            TipoBicicleta tipo = new TipoBicicleta("montaña");
+            tipo = tipos.save(tipo);
+
+            Bicicleta bicicleta = new Bicicleta("MyBici");
+            Bicicleta bici2 = new Bicicleta("Bogota");
+            bicicleta.setDisponible(true);
+
+            bicicleta.setTipo(tipo);
+            tipo.getBicicletas().add(bicicleta);
+
+            bicicleta = bicicletas.save(bicicleta);
+            tipo = tipos.save(tipo);
+            casosdeUsoPrestamo.prestarBicicleta(u,tipo);
+            casosdeUsoPrestamo.finalizarPrestamo(bici2);
+            fail("Dejo finalizar prestamo aunque se entregara una bicicleta no presente en la base de datos");
+        } catch (Exception e) {
+            // OK
+        }
+    }
+
+    @Test
+    @Transactional
+    public void finalizarPrestamoConBicicletaYaEntregada(){
+        try {
+            List<Usuario> usuariosExistentes = usuarios.findByCorreo("jaime");
+            Usuario u = usuariosExistentes.get(0);
+
+            TipoBicicleta tipo = new TipoBicicleta("montaña");
+            tipo = tipos.save(tipo);
+
+            Bicicleta bicicleta = new Bicicleta("MyBici");
+            bicicleta.setDisponible(false);
+
+            bicicleta.setTipo(tipo);
+            tipo.getBicicletas().add(bicicleta);
+
+            bicicleta = bicicletas.save(bicicleta);
+            tipo = tipos.save(tipo);
+            casosdeUsoPrestamo.prestarBicicleta(u,tipo);
+            casosdeUsoPrestamo.finalizarPrestamo(bicicleta);
+            fail("Dejo finalizar prestamo cuando la bicicleta ya fue entregada anteriormente");
+        } catch (Exception e) {
+            //OK
+        }
+    }
+    @Test
+    @Transactional
+    public void finalizarPrestamoConBicicletaNoAsignadaaNingunPrestamo(){
+        try {
+            List<Usuario> usuariosExistentes = usuarios.findByCorreo("jaime");
+            Usuario u = usuariosExistentes.get(0);
+
+            TipoBicicleta tipo = new TipoBicicleta("montaña");
+            tipo = tipos.save(tipo);
+
+            Bicicleta bicicleta = new Bicicleta("MyBici");
+            bicicleta.setDisponible(true);
+
+            bicicleta.setTipo(tipo);
+            tipo.getBicicletas().add(bicicleta);
+
+            bicicleta = bicicletas.save(bicicleta);
+            tipo = tipos.save(tipo);
+            casosdeUsoPrestamo.prestarBicicleta(u,tipo);
+            casosdeUsoPrestamo.finalizarPrestamo(bicicleta);
             
         } catch (Exception e) {
-            // TODO: handle exception
+            // Ok
         }
     }
 }
