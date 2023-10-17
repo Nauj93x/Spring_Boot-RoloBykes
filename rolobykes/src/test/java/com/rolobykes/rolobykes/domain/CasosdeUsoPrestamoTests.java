@@ -321,6 +321,33 @@ public class CasosdeUsoPrestamoTests {
             TipoBicicleta tipo = new TipoBicicleta("montaña");
             tipo = tipos.save(tipo);
 
+            Bicicleta bici = new Bicicleta("Yogurt");
+            Bicicleta bicicleta = new Bicicleta("MyBici");
+            bicicleta.setDisponible(true);
+            
+            bicicleta.setTipo(tipo);
+            tipo.getBicicletas().add(bicicleta);
+
+            bicicleta = bicicletas.save(bicicleta);
+            tipo = tipos.save(tipo);
+            casosdeUsoPrestamo.prestarBicicleta(u,tipo);
+            casosdeUsoPrestamo.finalizarPrestamo(bici);
+            fail("Dejo finalizar una reserva cuando la bicicleta enviada no esta asignada a ningun prestamo");
+        } catch (Exception e) {
+            // Ok
+        }
+    }
+
+    @Test
+    @Transactional
+    public void finalizarPrestamoyaFinalizado(){
+        try {
+            List<Usuario> usuariosExistentes = usuarios.findByCorreo("jaime");
+            Usuario u = usuariosExistentes.get(0);
+
+            TipoBicicleta tipo = new TipoBicicleta("montaña");
+            tipo = tipos.save(tipo);
+
             Bicicleta bicicleta = new Bicicleta("MyBici");
             bicicleta.setDisponible(true);
 
@@ -330,10 +357,15 @@ public class CasosdeUsoPrestamoTests {
             bicicleta = bicicletas.save(bicicleta);
             tipo = tipos.save(tipo);
             casosdeUsoPrestamo.prestarBicicleta(u,tipo);
+            List<Prestamo> prestamosIniciados = prestamos.findByBicicleta(bicicleta);
+            Prestamo prest = prestamosIniciados.get(0);
+            prest.setActivo(false);
             casosdeUsoPrestamo.finalizarPrestamo(bicicleta);
-            
+            fail("Dejo finalizar un prestamo que ya fue finalizado");
+
         } catch (Exception e) {
-            // Ok
+            // OK
         }
+
     }
 }
