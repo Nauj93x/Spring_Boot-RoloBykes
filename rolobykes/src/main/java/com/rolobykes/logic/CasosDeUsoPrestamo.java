@@ -37,7 +37,7 @@ public class CasosDeUsoPrestamo {
         prestamo.setFechaInicio(new Date());
         prestamo.setFechaFin(new Date());
 
-        bicicletas.get(0).setEstado("prestada");
+        bicicletas.get(0).setEstado("La bicicleta se encuentra prestada");
 
         prestamos.save(prestamo);
         bicicletas.save(bicicletas.get(0));
