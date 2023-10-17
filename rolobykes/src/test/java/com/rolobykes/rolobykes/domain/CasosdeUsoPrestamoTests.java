@@ -100,7 +100,6 @@ public class CasosdeUsoPrestamoTests {
                 // mal !!
                 fail("No se grabó el prestamo");
             }
-            
         } catch (Exception e) {
             fail("No dejo guardar el prestamo",e);
         }
