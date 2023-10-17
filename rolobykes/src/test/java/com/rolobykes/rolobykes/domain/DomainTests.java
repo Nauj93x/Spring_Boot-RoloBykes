@@ -199,4 +199,14 @@ public class DomainTests {
         }
     }
 
+    @Test
+    @Transactional
+    public void crearPrestamo(){
+        try {
+            
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
+    }
+
 }

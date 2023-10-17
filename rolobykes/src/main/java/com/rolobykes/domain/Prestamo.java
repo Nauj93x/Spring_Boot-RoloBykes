@@ -31,6 +31,6 @@ public class Prestamo {
     @ManyToOne
     Bicicleta bicicleta;
 
-    boolean activo;
+    boolean activo = false;
 
 }
