@@ -14,4 +14,6 @@ public interface BicicletaRepository extends JpaRepository <Bicicleta, String>{
     List<Bicicleta> findByTipo(TipoBicicleta tipo);
 
     List<Bicicleta> findByDisponible(boolean disponible);
+
+    List<Bicicleta> findByCodigo(String codigo);
 }

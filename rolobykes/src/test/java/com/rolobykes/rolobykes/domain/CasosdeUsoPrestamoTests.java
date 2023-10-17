@@ -105,7 +105,7 @@ public class CasosdeUsoPrestamoTests {
         }
 
     }
-
+      
     @Test
     @Transactional
     public void realizarPrestamoSinUsuariosRegistrados(){
@@ -155,8 +155,6 @@ public class CasosdeUsoPrestamoTests {
             bicicleta = bicicletas.save(bicicleta);
             tipo = tipos.save(tipo);
             casosdeUsoPrestamo.prestarBicicleta(u,tipo);
-            List<Prestamo> prestamosIniciados = prestamos.findByBicicleta(bicicleta);
-
             fail("Dejó hacer prestamo a usuario que no ha iniciado sesion");
 
         } catch (Exception e) {
@@ -228,6 +226,46 @@ public class CasosdeUsoPrestamoTests {
             fail("Dejo crear prestamo con tipo de bicicleta donde no hay bicicletas disponibles en la base de datos");
         } catch (Exception e) {
             // Ok
+        }
+    }
+
+    @Test
+    @Transactional
+    public void finalizarPrestamoSinErrores(){
+        try {
+            List<Usuario> usuariosExistentes = usuarios.findByCorreo("jaime");
+            Usuario u = usuariosExistentes.get(0);
+
+            TipoBicicleta tipo = new TipoBicicleta("montaña");
+            tipo = tipos.save(tipo);
+
+            Bicicleta bicicleta = new Bicicleta("MyBici");
+            bicicleta.setDisponible(true);
+
+            bicicleta.setTipo(tipo);
+            tipo.getBicicletas().add(bicicleta);
+
+            bicicleta = bicicletas.save(bicicleta);
+            tipo = tipos.save(tipo);
+            casosdeUsoPrestamo.prestarBicicleta(u,tipo);
+            casosdeUsoPrestamo.finalizarPrestamo(bicicleta);
+            List<Prestamo> prestamosIniciados = prestamos.findByBicicleta(bicicleta);
+            Prestamo prest = prestamosIniciados.get(0);
+            if(prest.isActivo()==true){
+                fail("No se finalizo el prestamo");
+            }
+        } catch (Exception e) {
+            fail("No dejo finalizar el prestamo",e);
+        }
+    }
+
+    @Test
+    @Transactional
+    public void finalizarPrestamoConCodigoInexistente(){
+        try {
+            
+        } catch (Exception e) {
+            // TODO: handle exception
         }
     }
 }

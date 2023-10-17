@@ -74,4 +74,39 @@ public class CasosDeUsoPrestamo {
         prestamo.setUsuario(usuario);
         prestamos.save(prestamo);
     }
+
+    public void finalizarPrestamo(Bicicleta bicicleta) throws ExcepcionPrestamo {
+        List<Bicicleta> bicicletasEncontradas = bicicletas.findByCodigo(bicicleta.getCodigo());
+        if (bicicletasEncontradas.isEmpty()) {
+            // 2.1. Sistema muestra un mensaje "No se encontró ninguna bicicleta con ese codigo"
+            // 2.2. Sistema termina
+            throw new ExcepcionPrestamo("No se encontró ninguna bicicleta con ese codigo");
+        }
+        Bicicleta bicicletaEncontrada = bicicletasEncontradas.get(0);
+    
+        if (bicicletaEncontrada.isDisponible() == false) {
+            throw new ExcepcionPrestamo("Esta bicicleta ya fue entregada");
+        }
+        List<Prestamo> prestamosEncontrados = prestamos.findByBicicleta(bicicletaEncontrada);
+        if (prestamosEncontrados.isEmpty()) {
+            // 2.1. Sistema muestra un mensaje "No se encontró ninguna bicicleta con ese codigo"
+            // 2.2. Sistema termina
+            throw new ExcepcionPrestamo("No se encontró ningun prestamo relacionado a esa bicicleta");
+        }
+        Prestamo prestamo = prestamosEncontrados.get(0);
+        if(prestamo.isActivo() == false){
+            throw new ExcepcionPrestamo("El prestamo de esa bicicleta ya ha sido finalizado");
+        }
+        Bicicleta biciDevuelta = prestamo.getBicicleta();
+        biciDevuelta.setDisponible(false);
+        biciDevuelta = bicicletas.save(biciDevuelta);
+        prestamo.setBicicleta(biciDevuelta);
+        prestamo.setActivo(false);
+        Usuario us = prestamo.getUsuario();
+        us.getPrestamos().add(prestamo);
+        us = usuarios.save(us);
+        prestamo.setUsuario(us);
+        us = usuarios.save(us);
+        prestamo = prestamos.save(prestamo);
+    }
 }

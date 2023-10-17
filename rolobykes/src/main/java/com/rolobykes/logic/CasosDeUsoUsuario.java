@@ -96,14 +96,14 @@ public class CasosDeUsoUsuario {
             // 2.2. Sistema termina
             throw new ExcepcionUsuario("No se encontró ningún usuario con ese login");
         }
-    
+
         Usuario usuarioEncontrado = usuariosEncontrados.get(0);
     
         if (usuarioEncontrado.getSessionId() == null) {
             throw new ExcepcionUsuario("La sesión no ha sido iniciada para este usuario");
         }
     
-        // (6) Sistema inicia la sesión para el usuario
+        // (6) Sistema cierra la sesión para el usuario
         usuarioEncontrado.setSessionId(null);
         usuarios.save(usuarioEncontrado);
     }
