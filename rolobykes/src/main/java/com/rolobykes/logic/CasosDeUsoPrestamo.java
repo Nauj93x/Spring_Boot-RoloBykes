@@ -30,8 +30,7 @@ public class CasosDeUsoPrestamo {
         } else {
 
             // 2.1. Sistema muestra un mensaje "El usuario ha iniciado sesion"
-            echo "<div class='alert alert-success'>El usuario ha iniciado sesion</div>";
-
+            throw new ExcepcionPrestamo("El usuario El usuario ha iniciado sesion");
             // 2.2. Sistema continúa con el prestamo
             prestamo.setUsuario(Usuario);
             prestamo.setActivo(true);
