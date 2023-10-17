@@ -20,23 +20,26 @@ public class CasosDeUsoPrestamo {
     BicicletaRepository bicicletas;
 
     public void PrestarBicicleta(Usuario Usuario,TipoBicicleta tipo) throws ExcepcionPrestamo {
-        
-        Prestamo prestamo = new Prestamo();
 
         if (Usuario.getSessionId() == null) {
-            // 2.1. Sistema muestra un mensaje "El usuario no ha iniciado sesion"
-            // 2.2. Sistema termina
             throw new ExcepcionPrestamo("El usuario no ha iniciado sesion");
-        } else {
-
-            // 2.1. Sistema muestra un mensaje "El usuario ha iniciado sesion"
-            throw new ExcepcionPrestamo("El usuario El usuario ha iniciado sesion");
-            // 2.2. Sistema continúa con el prestamo
-            prestamo.setUsuario(Usuario);
-            prestamo.setActivo(true);
-
-            boolean Estado = true;
-            List<Bicicleta> bici = bicicletas.findByTipoBicicleta(tipo);
         }
+
+        List<Bicicleta> bicicletas = bicicletas.findByTipoBicicleta(tipo);
+
+        if (bicicletas.isEmpty()) {
+            throw new ExcepcionPrestamo("La bicicleta no está disponible");
+        }
+
+        Prestamo prestamo = new Prestamo();
+        prestamo.setUsuario(Usuario);
+        prestamo.setTipoBicicleta(tipo);
+        prestamo.setFechaInicio(new Date());
+        prestamo.setFechaFin(new Date());
+
+        bicicletas.get(0).setEstado("prestada");
+
+        prestamos.save(prestamo);
+        bicicletas.save(bicicletas.get(0));
     }
 }
