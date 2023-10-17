@@ -105,4 +105,129 @@ public class CasosdeUsoPrestamoTests {
         }
 
     }
+
+    @Test
+    @Transactional
+    public void realizarPrestamoSinUsuariosRegistrados(){
+        try {
+            Usuario u = new Usuario(
+                "bill",
+                "bill@microsoft.com",
+                "ILoveApple");
+
+            TipoBicicleta tipo = new TipoBicicleta("montaña");
+            tipo = tipos.save(tipo);
+
+            Bicicleta bicicleta = new Bicicleta("MyBici");
+            bicicleta.setDisponible(true);
+
+            bicicleta.setTipo(tipo);
+            tipo.getBicicletas().add(bicicleta);
+
+            bicicleta = bicicletas.save(bicicleta);
+            tipo = tipos.save(tipo);
+            casosdeUsoPrestamo.prestarBicicleta(u,tipo);
+            fail("Dejó hacer prestamo a usuario no registrado");
+        } catch (Exception e) {
+            // OK
+        }
+    }
+
+    @Test
+    @Transactional
+    public void realizarPrestamoConUsuariosSinSesion(){
+        try {
+            casosDeUsoUsuario.registrarUsuario(
+                "juan", 
+                "SoyElMejor", 
+                "Juan El mejor");
+            List<Usuario> usuariosExistentes = usuarios.findByCorreo("juan");
+            Usuario u = usuariosExistentes.get(0);
+            TipoBicicleta tipo = new TipoBicicleta("montaña");
+            tipo = tipos.save(tipo);
+
+            Bicicleta bicicleta = new Bicicleta("MyBici");
+            bicicleta.setDisponible(true);
+
+            bicicleta.setTipo(tipo);
+            tipo.getBicicletas().add(bicicleta);
+
+            bicicleta = bicicletas.save(bicicleta);
+            tipo = tipos.save(tipo);
+            casosdeUsoPrestamo.prestarBicicleta(u,tipo);
+            List<Prestamo> prestamosIniciados = prestamos.findByBicicleta(bicicleta);
+
+            fail("Dejó hacer prestamo a usuario que no ha iniciado sesion");
+
+        } catch (Exception e) {
+            // Ok
+        }
+    }
+
+    @Test
+    @Transactional
+    public void realizarPrestamoConTipodeBicicletaNoExistente(){
+        try {
+            List<Usuario> usuariosExistentes = usuarios.findByCorreo("jaime");
+            Usuario u = usuariosExistentes.get(0);
+
+            TipoBicicleta tipo = new TipoBicicleta("montaña");
+
+            Bicicleta bicicleta = new Bicicleta("MyBici");
+            bicicleta.setDisponible(true);
+
+            bicicleta.setTipo(tipo);
+            tipo.getBicicletas().add(bicicleta);
+
+            bicicleta = bicicletas.save(bicicleta);
+            casosdeUsoPrestamo.prestarBicicleta(u,tipo);
+
+            fail("Dejo crear prestamo con tipo de bicicleta no existente en la base de datos");
+        } catch (Exception e) {
+            // OK
+        }
+    }
+
+    @Test
+    @Transactional
+    public void realizarPrestamoConTipodeBicicletaSinBicicletas(){
+        try {
+            List<Usuario> usuariosExistentes = usuarios.findByCorreo("jaime");
+            Usuario u = usuariosExistentes.get(0);
+
+            TipoBicicleta tipo = new TipoBicicleta("montaña");
+            tipo = tipos.save(tipo);
+
+            casosdeUsoPrestamo.prestarBicicleta(u,tipo);
+
+            fail("Dejo crear prestamo con tipo de bicicleta dondeno existen bicicletas en la base de datos");
+            
+        } catch (Exception e) {
+            // Ok
+        }
+    }
+
+    @Test
+    @Transactional
+    public void realizarPrestamoConTipodeBicicletaSinBicicletasDisponibles(){
+        try {
+            List<Usuario> usuariosExistentes = usuarios.findByCorreo("jaime");
+            Usuario u = usuariosExistentes.get(0);
+
+            TipoBicicleta tipo = new TipoBicicleta("montaña");
+            tipo = tipos.save(tipo);
+
+            Bicicleta bicicleta = new Bicicleta("MyBici");
+
+            bicicleta.setTipo(tipo);
+            tipo.getBicicletas().add(bicicleta);
+
+            bicicleta = bicicletas.save(bicicleta);
+            tipo = tipos.save(tipo);
+            casosdeUsoPrestamo.prestarBicicleta(u,tipo);
+            fail("Dejo crear prestamo con tipo de bicicleta donde no hay bicicletas disponibles en la base de datos");
+        } catch (Exception e) {
+            // Ok
+        }
+    }
 }

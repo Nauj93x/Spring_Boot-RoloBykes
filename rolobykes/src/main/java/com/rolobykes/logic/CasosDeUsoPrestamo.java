@@ -40,7 +40,7 @@ public class CasosDeUsoPrestamo {
         if (usuariosExistentes.isEmpty()) {
 			// 2.1. Sistema muestra un mensaje "No existen usuarios con este correo"
 			// 2.2. Sistema termina
-			throw new ExcepcionPrestamo("No existen usuarios con este correo");
+			throw new ExcepcionPrestamo("No existen usuarios registradps con este correo");
 		}
         Usuario usuarioEncontrado = usuariosExistentes.get(0);
 		if (usuarioEncontrado.getSessionId() == null){
