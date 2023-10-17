@@ -10,6 +10,8 @@ import com.rolobykes.dataaccess.PrestamoRepository;
 import com.rolobykes.dataaccess.ReservaRepository;
 import com.rolobykes.dataaccess.TipoBicicletaRepository;
 import com.rolobykes.dataaccess.UsuarioRepository;
+import com.rolobykes.domain.Prestamo;
+import com.rolobykes.domain.Prestamo;
 import com.rolobykes.domain.Reserva;
 import com.rolobykes.domain.TipoBicicleta;
 import com.rolobykes.domain.Usuario;
@@ -48,11 +50,14 @@ public class CasosDeUsoReserva {
 			// 2.2. Sistema termina
 			throw new ExcepcionReserva("No existe ese tipo de bicicleta");
 		}
+		Prestamo prest = new Prestamo();
+		reserva.getPrestamos().add(prest);
+		reserva.setUsuario(usuario);
 		// Asignar reserva al usuario
 		usuario.getReservas().add(reserva);
-		reserva.setUsuario(usuario);
 		// Crear prestamo relacionado
 		reserva.setTipoBicicleta(tipoBicicleta);
+		reserva.setUsuario(usuario);
 		// Guardar reserva y prestamo relacionado
 		reservas.save(reserva);
 		// Guardar usuario con la nueva reserva

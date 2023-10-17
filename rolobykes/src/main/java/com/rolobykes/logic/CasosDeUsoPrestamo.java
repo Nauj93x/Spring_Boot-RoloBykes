@@ -1,12 +1,18 @@
 package com.rolobykes.logic;
 
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.rolobykes.dataaccess.BicicletaRepository;
 import com.rolobykes.dataaccess.PrestamoRepository;
+import com.rolobykes.dataaccess.TipoBicicletaRepository;
+import com.rolobykes.dataaccess.UsuarioRepository;
+import com.rolobykes.domain.Bicicleta;
 import com.rolobykes.domain.Prestamo;
+import com.rolobykes.domain.Reserva;
 import com.rolobykes.domain.TipoBicicleta;
 import com.rolobykes.domain.Usuario;
 
@@ -19,27 +25,41 @@ public class CasosDeUsoPrestamo {
     @Autowired
     BicicletaRepository bicicletas;
 
-    public void PrestarBicicleta(Usuario Usuario,TipoBicicleta tipo) throws ExcepcionPrestamo {
+    @Autowired
+    UsuarioRepository usuarios;
 
-        if (Usuario.getSessionId() == null) {
-            throw new ExcepcionPrestamo("El usuario no ha iniciado sesion");
+    @Autowired
+    TipoBicicletaRepository tiposBicicletas;
+
+    public void PrestarBicicleta(Usuario usuario,TipoBicicleta tipo) throws ExcepcionPrestamo {
+        List<Usuario> usuariosExistentes = usuarios.findByCorreo(usuario.getCorreo());
+        if (usuariosExistentes.isEmpty()) {
+			// 2.1. Sistema muestra un mensaje "No existen usuarios con este correo"
+			// 2.2. Sistema termina
+			throw new ExcepcionPrestamo("No existen usuarios con este correo");
+		}
+        Usuario usuarioEncontrado = usuariosExistentes.get(0);
+		if (usuarioEncontrado.getSessionId() == null){
+			throw new ExcepcionPrestamo("Este usuario no ha iniciado sesion");
+		}
+        List<TipoBicicleta> tiposExistentes = tiposBicicletas.findByNombre(tipo.getNombre());
+		if (tiposExistentes.isEmpty()) { 
+			// 2.1. Sistema muestra un mensaje "No existen usuarios con este correo"
+			// 2.2. Sistema termina
+			throw new ExcepcionPrestamo("No existe ese tipo de bicicleta");
+		}
+        List<Bicicleta> bicicletasExistentes = bicicletas.findByTipo(tipo);
+        if (bicicletasExistentes.isEmpty()) {
+            throw new ExcepcionPrestamo("No existen bicicletas de ese tipo");
         }
-
-        List<Bicicleta> bicicletas = bicicletas.findByTipoBicicleta(tipo);
-
-        if (bicicletas.isEmpty()) {
-            throw new ExcepcionPrestamo("La bicicleta no está disponible");
+        Bicicleta bici = bicicletasExistentes.get(0);
+        if(bici.isDisponible() == false){
+            throw new ExcepcionPrestamo("No hay bicicletas disponibles de ese tipo");
         }
-
         Prestamo prestamo = new Prestamo();
-        prestamo.setUsuario(Usuario);
-        prestamo.setTipoBicicleta(tipo);
-        prestamo.setFechaInicio(new Date());
-        prestamo.setFechaFin(new Date());
-
-        bicicletas.get(0).setEstado("La bicicleta se encuentra prestada");
-
-        prestamos.save(prestamo);
-        bicicletas.save(bicicletas.get(0));
+        Reserva reserva = new Reserva();
+        prestamo.setActivo(true);
+        prestamo.setBicicleta(bici);
+        prestamo.setUsuario(usuario);
     }
 }
