@@ -41,13 +41,11 @@ public class CasosdeUsoReservaTests {
     UsuarioRepository usuarios;
 
     @Autowired
-    TipoBicicletaRepository tiposbicicletas;
+    TipoBicicletaRepository tiposBicicletas;
 
     @Autowired
     CasosDeUsoUsuario casosDeUsoUsuario;
 
-    @Autowired
-    TipoBicicletaRepository tiposBicicleta;
     
     @Autowired
     BicicletaRepository bicicletas;
@@ -64,6 +62,10 @@ public class CasosdeUsoReservaTests {
         System.out.println();
 
         usuarios.deleteAll();
+        bicicletas.deleteAll();
+        reservas.deleteAll();
+        tiposBicicletas.deleteAll();
+
         Usuario u = new Usuario();
         u.setCorreo("jaime");
         u.setNombre("jaime");
@@ -85,7 +87,7 @@ public class CasosdeUsoReservaTests {
             Usuario u = usuariosExistentes.get(0);
 
             TipoBicicleta tipo = new TipoBicicleta("montaña");
-            tipo = tiposBicicleta.save(tipo);
+            tipo = tiposBicicletas.save(tipo);
 
             Bicicleta bicicleta = new Bicicleta("MyBici");
 
@@ -93,7 +95,7 @@ public class CasosdeUsoReservaTests {
             tipo.getBicicletas().add(bicicleta);
 
             bicicleta = bicicletas.save(bicicleta);
-            tipo = tiposBicicleta.save(tipo);
+            tipo = tiposBicicletas.save(tipo);
 
             Date fecha = new Date(1230768000000L);
 
@@ -122,7 +124,7 @@ public class CasosdeUsoReservaTests {
             Usuario u = usuariosExistentes.get(0);
 
             TipoBicicleta tipo = new TipoBicicleta("montaña");
-            tipo = tiposBicicleta.save(tipo);
+            tipo = tiposBicicletas.save(tipo);
 
             Bicicleta bicicleta = new Bicicleta("MyBici");
 
@@ -130,7 +132,7 @@ public class CasosdeUsoReservaTests {
             tipo.getBicicletas().add(bicicleta);
 
             bicicleta = bicicletas.save(bicicleta);
-            tipo = tiposBicicleta.save(tipo);
+            tipo = tiposBicicletas.save(tipo);
 
             Date fecha = new Date(1230768000000L);
 
@@ -162,7 +164,7 @@ public class CasosdeUsoReservaTests {
             tipo.getBicicletas().add(bicicleta);
 
             bicicleta = bicicletas.save(bicicleta);
-            tipo = tiposBicicleta.save(tipo);
+            tipo = tiposBicicletas.save(tipo);
 
             Date fecha = new Date(1230768000000L);
 
@@ -191,7 +193,7 @@ public class CasosdeUsoReservaTests {
             tipo.getBicicletas().add(bicicleta);
 
             bicicleta = bicicletas.save(bicicleta);
-            tipo = tiposBicicleta.save(tipo);
+            tipo = tiposBicicletas.save(tipo);
 
             Date fecha = new Date(1230768000000L);
 

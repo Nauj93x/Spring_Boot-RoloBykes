@@ -35,7 +35,7 @@ public class CasosDeUsoPrestamo {
     @Autowired
     ReservaRepository reservas;
 
-    public void PrestarBicicleta(Usuario usuario,TipoBicicleta tipo) throws ExcepcionPrestamo {
+    public void prestarBicicleta(Usuario usuario,TipoBicicleta tipo) throws ExcepcionPrestamo {
         List<Usuario> usuariosExistentes = usuarios.findByCorreo(usuario.getCorreo());
         if (usuariosExistentes.isEmpty()) {
 			// 2.1. Sistema muestra un mensaje "No existen usuarios con este correo"
