@@ -27,13 +27,17 @@ public class CasosDeUsoPrestamo {
             // 2.1. Sistema muestra un mensaje "El usuario no ha iniciado sesion"
             // 2.2. Sistema termina
             throw new ExcepcionPrestamo("El usuario no ha iniciado sesion");
+        } else {
+
+            // 2.1. Sistema muestra un mensaje "El usuario ha iniciado sesion"
+            echo "<div class='alert alert-success'>El usuario ha iniciado sesion</div>";
+
+            // 2.2. Sistema continúa con el prestamo
+            prestamo.setUsuario(Usuario);
+            prestamo.setActivo(true);
+
+            boolean Estado = true;
+            List<Bicicleta> bici = bicicletas.findByTipoBicicleta(tipo);
         }
-
-        prestamo.setUsuario(Usuario);
-        prestamo.setActivo(true);
-
-        // boolean Estado = true;
-        // List<Bicicleta> bici = bicicletas.findByTipoBicicleta(tipo); 
-        
     }
 }
