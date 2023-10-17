@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.rolobykes.dataaccess.BicicletaRepository;
 import com.rolobykes.dataaccess.PrestamoRepository;
+import com.rolobykes.dataaccess.ReservaRepository;
 import com.rolobykes.dataaccess.TipoBicicletaRepository;
 import com.rolobykes.dataaccess.UsuarioRepository;
 import com.rolobykes.domain.Bicicleta;
@@ -30,6 +31,9 @@ public class CasosDeUsoPrestamo {
 
     @Autowired
     TipoBicicletaRepository tiposBicicletas;
+
+    @Autowired
+    ReservaRepository reservas;
 
     public void PrestarBicicleta(Usuario usuario,TipoBicicleta tipo) throws ExcepcionPrestamo {
         List<Usuario> usuariosExistentes = usuarios.findByCorreo(usuario.getCorreo());
@@ -58,8 +62,16 @@ public class CasosDeUsoPrestamo {
         }
         Prestamo prestamo = new Prestamo();
         Reserva reserva = new Reserva();
+        reserva = reservas.save(reserva);
+        // Asignar prestamo al usuario
+        prestamo.setUsuario(usuario);
+        usuario.getPrestamos().add(prestamo);
+        usuario = usuarios.save(usuario);
+        prestamo.setUsuario(usuario);
+        prestamo.setReserva(reserva);
         prestamo.setActivo(true);
         prestamo.setBicicleta(bici);
         prestamo.setUsuario(usuario);
+        prestamos.save(prestamo);
     }
 }

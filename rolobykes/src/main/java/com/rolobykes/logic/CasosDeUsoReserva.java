@@ -51,11 +51,11 @@ public class CasosDeUsoReserva {
 			throw new ExcepcionReserva("No existe ese tipo de bicicleta");
 		}
 		Prestamo prest = new Prestamo();
+		prest = prestamos.save(prest);
 		reserva.getPrestamos().add(prest);
 		reserva.setUsuario(usuario);
 		// Asignar reserva al usuario
 		usuario.getReservas().add(reserva);
-		// Crear prestamo relacionado
 		reserva.setTipoBicicleta(tipoBicicleta);
 		reserva.setUsuario(usuario);
 		// Guardar reserva y prestamo relacionado
