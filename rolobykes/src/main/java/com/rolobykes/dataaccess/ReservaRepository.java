@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import com.rolobykes.domain.Reserva;
 
 @Repository
-public interface ReservaRepository extends JpaRepository <Reserva, String>{
+public interface ReservaRepository extends JpaRepository <Reserva, Long>{
     
     List<Reserva> findByFechaReserva(Date fechaReserva);
 }
