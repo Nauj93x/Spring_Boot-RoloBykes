@@ -8,6 +8,7 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -58,6 +59,7 @@ public class CasosdeUsoUsuarioTests {
     // ----------------------
 
     // Curso normal de eventos -- "caso feliz"
+    @Tag("Usuario")
     @Test
     public void registrarUsuarioSinErrores() {
 
@@ -87,6 +89,7 @@ public class CasosdeUsoUsuarioTests {
 
     // Curso alternativo -- 
     // (2) Cuando existe otro usuario con ese login
+    @Tag("Usuario")
     @Test
     public void registrarUsuarioConLoginQueYaExiste() {
 
@@ -108,6 +111,7 @@ public class CasosdeUsoUsuarioTests {
 
     // Curso alternativo -- 
     // (4) Cuando el password tiene menos de cinco letras
+    @Tag("Usuario")
     @Test
     public void registrarUsuarioConPasswordDeMenosDe5Letras() {
 
@@ -130,6 +134,7 @@ public class CasosdeUsoUsuarioTests {
 
     }
 
+    @Tag("Usuario")
     @Test
     @Transactional
     public void iniciarSesionSinErrores(){
@@ -161,6 +166,7 @@ public class CasosdeUsoUsuarioTests {
         }
     }
 
+    @Tag("Usuario")
     @Test
     @Transactional
     public void iniciarSesionConSesionYaExistente(){
@@ -180,6 +186,7 @@ public class CasosdeUsoUsuarioTests {
         }
     }
 
+    @Tag("Usuario")
     @Test
     @Transactional
     public void cerrarSesionSinErrores(){
@@ -215,6 +222,7 @@ public class CasosdeUsoUsuarioTests {
         }
     }
 
+    @Tag("Usuario")
     @Test
     @Transactional
     public void cerrarSesionConUsuarioSinSesion(){

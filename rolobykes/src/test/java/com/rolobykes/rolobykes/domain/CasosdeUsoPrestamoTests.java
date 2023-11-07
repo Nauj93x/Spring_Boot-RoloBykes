@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -76,6 +77,7 @@ public class CasosdeUsoPrestamoTests {
 
     // CU1: PrestarBicicleta
     // ----------------------
+    @Tag("Prestamo")
     @Test
     @Transactional
     public void realizarPrestamoSinErrores() {
@@ -106,6 +108,7 @@ public class CasosdeUsoPrestamoTests {
 
     }
       
+    @Tag("Prestamo")
     @Test
     @Transactional
     public void realizarPrestamoSinUsuariosRegistrados(){
@@ -133,6 +136,7 @@ public class CasosdeUsoPrestamoTests {
         }
     }
 
+    @Tag("Prestamo")
     @Test
     @Transactional
     public void realizarPrestamoConUsuariosSinSesion(){
@@ -162,6 +166,7 @@ public class CasosdeUsoPrestamoTests {
         }
     }
 
+    @Tag("Prestamo")
     @Test
     @Transactional
     public void realizarPrestamoConTipodeBicicletaNoExistente(){
@@ -186,6 +191,7 @@ public class CasosdeUsoPrestamoTests {
         }
     }
 
+    @Tag("Prestamo")
     @Test
     @Transactional
     public void realizarPrestamoConTipodeBicicletaSinBicicletas(){
@@ -205,6 +211,7 @@ public class CasosdeUsoPrestamoTests {
         }
     }
 
+    @Tag("Prestamo")
     @Test
     @Transactional
     public void realizarPrestamoConTipodeBicicletaSinBicicletasDisponibles(){
@@ -229,6 +236,7 @@ public class CasosdeUsoPrestamoTests {
         }
     }
 
+    @Tag("Prestamo")
     @Test
     @Transactional
     public void finalizarPrestamoSinErrores(){
@@ -259,6 +267,7 @@ public class CasosdeUsoPrestamoTests {
         }
     }
 
+    @Tag("Prestamo")
     @Test
     @Transactional
     public void finalizarPrestamoConCodigodeBicicletaInexistente(){
@@ -286,6 +295,7 @@ public class CasosdeUsoPrestamoTests {
         }
     }
 
+    @Tag("Prestamo")
     @Test
     @Transactional
     public void finalizarPrestamoConBicicletaYaEntregada(){
@@ -311,6 +321,7 @@ public class CasosdeUsoPrestamoTests {
             //OK
         }
     }
+    @Tag("Prestamo")
     @Test
     @Transactional
     public void finalizarPrestamoConBicicletaNoAsignadaaNingunPrestamo(){
@@ -338,6 +349,7 @@ public class CasosdeUsoPrestamoTests {
         }
     }
 
+    @Tag("Prestamo")
     @Test
     @Transactional
     public void finalizarPrestamoyaFinalizado(){
