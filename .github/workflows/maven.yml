@@ -11,7 +11,6 @@ name: Compilar y probar
 on:
   workflow_dispatch:
     
-
 jobs:
   Compilar:
 
@@ -35,6 +34,6 @@ jobs:
       run: cd rolobykes; docker compose up -d
 
     - name: Probar
-      run: cd rolobykes; mvn test
+      run: cd rolobykes; ./mvnw test
 
       
