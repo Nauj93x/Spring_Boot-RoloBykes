@@ -34,6 +34,6 @@ jobs:
       run: cd rolobykes; docker compose up -d
 
     - name: Probar
-      run: cd rolobykes; ./mvnw test
+      run: cd rolobykes; mvn test
 
       
