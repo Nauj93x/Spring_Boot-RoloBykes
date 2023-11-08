@@ -29,7 +29,7 @@ jobs:
         cache: maven
         
     - name:  Compilar 
-      run: cd rolobykes; ./mvn -B package --file pom.xml -DskipTests
+      run: cd rolobykes; mvn -B package --file pom.xml -DskipTests
 
     - name:  Ejecutar mysql
       run: cd rolobykes; docker compose up -d
