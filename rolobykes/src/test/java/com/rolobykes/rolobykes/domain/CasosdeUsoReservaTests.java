@@ -25,7 +25,7 @@ import com.rolobykes.domain.TipoBicicleta;
 import com.rolobykes.domain.Usuario;
 import com.rolobykes.logic.CasosDeUsoReserva;
 import com.rolobykes.logic.CasosDeUsoUsuario;
-import com.rolobykes.logic.ExcepcionReserva;
+//import com.rolobykes.logic.ExcepcionReserva;
 
 @SpringBootTest
 public class CasosdeUsoReservaTests {

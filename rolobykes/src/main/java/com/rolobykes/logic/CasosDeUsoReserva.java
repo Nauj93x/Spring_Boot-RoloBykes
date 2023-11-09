@@ -11,7 +11,7 @@ import com.rolobykes.dataaccess.ReservaRepository;
 import com.rolobykes.dataaccess.TipoBicicletaRepository;
 import com.rolobykes.dataaccess.UsuarioRepository;
 import com.rolobykes.domain.Prestamo;
-import com.rolobykes.domain.Prestamo;
+//import com.rolobykes.domain.Prestamo;
 import com.rolobykes.domain.Reserva;
 import com.rolobykes.domain.TipoBicicleta;
 import com.rolobykes.domain.Usuario;
