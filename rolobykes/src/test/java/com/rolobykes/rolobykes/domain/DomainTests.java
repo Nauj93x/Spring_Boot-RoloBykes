@@ -108,7 +108,7 @@ public class DomainTests {
 
 
         } catch (Exception e) {
-            // TODO: handle exception
+
         }
 
     }
